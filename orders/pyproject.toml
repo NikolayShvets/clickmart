@@ -1,0 +1,165 @@
+[project]
+name = "orders"                # Название проекта
+version = "0.1.0"             # Версия проекта
+description = "Add your description here"  # Описание проекта
+readme = "README.md"          # Путь к файлу README
+requires-python = ">=3.12.9"  # Минимальная версия Python
+dependencies = [ # Основные зависимости проекта
+    "alembic>=1.14.1",
+    "litestar[sqlalchemy,standard]>=2.14.0",
+    "pygame>=2.6.1",
+]
+
+[dependency-groups]
+dev = [                       # Зависимости для разработки
+    "mypy>=1.15.0",
+    "pytest>=8.3.4",
+    "ruff>=0.9.5",
+]
+
+[tool.ruff]
+exclude = [                   # Исключенные директории и файлы для линтинга
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+# Общие настройки
+line-length = 79                # Максимальная длина строки
+indent-width = 4               # Ширина отступа в пробелах
+target-version = "py312"       # Целевая версия Python
+
+[tool.ruff.lint]
+# Настройки линтинга
+select = [
+    "E",                       # pycodestyle
+    "F",                       # Pyflakes
+    "UP",                      # pyupgrade
+    "B",                       # flake8-bugbear
+    "SIM",                     # flake8-simplify
+    "I",                       # isort
+    "N",                       # pep8-naming
+    "T20",                     # flake8-print
+    "PT",                      # flake8-pytest-style
+    "RET",                     # flake8-return
+    "SLF",                     # flake8-self
+    "ARG",                     # flake8-unused-arguments
+    "ERA",                     # eradicate
+    "PGH",                     # pygrep-hooks
+    "PL",                      # pylint
+]
+
+ignore = []                    # Игнорируемые правила
+allowed-confusables = [        # Разрешенные похожие символы для русского алфавита
+    "у", "е", "г", "х", "а", "р", "о", "с", "б", 
+    "У", "К", "Е", "Н", "З", "Х", "В", "А", "Р", 
+    "О", "С", "М", "Т", "Ь"
+]
+fixable = ["ALL"]             # Все ошибки можно исправить
+unfixable = []                # Ошибки, которые нельзя исправить
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"  # Регулярное выражение для "пустых" переменных
+
+[tool.ruff.format]
+# Настройки форматирования
+quote-style = "double"        # Стиль кавычек (двойные)
+indent-style = "space"        # Стиль отступа (пробелы)
+skip-magic-trailing-comma = false  # Использовать магическую завершающую запятую
+line-ending = "auto"          # Конец строки (автоматически)
+docstring-code-format = false # Форматировать код в docstring
+docstring-code-line-length = "dynamic"  # Длина строки кода в docstring (динамически)
+
+[tool.mypy]
+# Исключенные директории и файлы для проверки типов
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+# Общие настройки проверки типов
+python_version = "3.12"       # Целевая версия Python
+warn_redundant_casts = true   # Предупреждать о избыточных приведениях типов
+warn_unused_ignores = true    # Предупреждать о неиспользуемых ignore-комментариях
+disallow_any_unimported = true  # Запретить типы Any для неимпортированных модулей
+disallow_subclassing_any = true # Запретить подклассы Any
+strict_equality = true        # Строгая проверка сравнений
+
+# Режимы строгой проверки
+strict = true                 # Активировать все strict-флаги
+disallow_untyped_defs = true  # Требовать аннотации типов для всех функций
+disallow_incomplete_defs = true  # Запретить частичные аннотации типов
+check_untyped_defs = true     # Проверять логику в нетипизированных функциях
+
+# Дополнительные проверки
+warn_unreachable = true       # Предупреждать о недостижимом коде
+warn_no_return = true         # Предупреждать о функциях без return
+warn_return_any = true        # Предупреждать о возврате Any
+no_implicit_optional = true   # Запретить неявные Optional
+strict_optional = true        # Строгая проверка Optional
+
+# Настройки импортов
+ignore_missing_imports = false  # Не игнорировать отсутствующие импорты
+follow_imports = "normal"      # Следовать импортам
+follow_imports_for_stubs = true  # Следовать импортам для stub-файлов
+
+# Настройки отчетов
+show_error_codes = true       # Показывать коды ошибок
+pretty = true                 # Красивый вывод
+color_output = true           # Цветной вывод
+error_summary = true          # Сводка ошибок
+
+[tool.pytest.ini_options]
+minversion = "8.0"            # Минимальная версия pytest
+addopts = "-ra -q --strict-markers"  # Опции командной строки по умолчанию
+testpaths = [                 # Пути для поиска тестов
+    "tests",
+]
+python_files = ["test_*.py", "*_test.py"]  # Шаблоны имен файлов с тестами
+python_classes = ["Test*"]    # Шаблоны имен классов с тестами
+python_functions = ["test_*"] # Шаблоны имен функций с тестами
