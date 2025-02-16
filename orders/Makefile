@@ -3,11 +3,8 @@
 .DEFAULT_GOAL := help
 
 # Переменные
-PYTHON := .venv/bin/python
 UV := uv
-PYTEST_FLAGS := -v
 RUFF_FLAGS := --fix
-MYPY_FLAGS := --strict
 
 # Цвета для help
 BLUE := \033[36m
@@ -43,10 +40,10 @@ format:  ## Отформатировать код с помощью ruff
 	$(UV) run ruff format .
 
 typecheck:  ## Проверить типы с помощью mypy
-	$(UV) run mypy $(MYPY_FLAGS) .
+	$(UV) run mypy .
 
 test:  ## Запустить тесты с помощью pytest
-	$(UV) run pytest $(PYTEST_FLAGS)
+	$(UV) run pytest .
 
 ## Вспомогательные команды
 help:  ## Показать это сообщение

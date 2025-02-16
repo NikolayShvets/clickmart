@@ -4,6 +4,7 @@ from enum import StrEnum
 from domain.entities.order_item import OrderItem
 from domain.exceptions import EmptyOrderError
 from domain.value_objects.money import Money
+from domain.value_objects.order_number import OrderNumber
 
 
 class OrderStatus(StrEnum):
@@ -12,8 +13,9 @@ class OrderStatus(StrEnum):
     CANCELLED = "cancelled"
 
 
-@dataclass
+@dataclass(frozen=True)
 class Order:
+    number: OrderNumber
     customer_id: str
     status: OrderStatus
     items: list[OrderItem]

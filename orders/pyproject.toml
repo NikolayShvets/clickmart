@@ -6,8 +6,11 @@ readme = "README.md"          # Путь к файлу README
 requires-python = ">=3.12.9"  # Минимальная версия Python
 dependencies = [ # Основные зависимости проекта
     "alembic>=1.14.1",
-    "litestar[sqlalchemy,standard]>=2.14.0",
+    "dishka>=1.4.2",
+    "litestar>=2.14.0",
+    "pydantic-settings>=2.7.1",
     "pygame>=2.6.1",
+    "uvicorn>=0.34.0",
 ]
 
 [dependency-groups]
@@ -92,6 +95,20 @@ docstring-code-format = false # Форматировать код в docstring
 docstring-code-line-length = "dynamic"  # Длина строки кода в docstring (динамически)
 
 [tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "src"
+explicit_package_bases = true
+namespace_packages = true
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unreachable = true
+
 # Исключенные директории и файлы для проверки типов
 exclude = [
     ".bzr",
@@ -122,32 +139,6 @@ exclude = [
     "venv",
 ]
 
-# Общие настройки проверки типов
-python_version = "3.12"       # Целевая версия Python
-warn_redundant_casts = true   # Предупреждать о избыточных приведениях типов
-warn_unused_ignores = true    # Предупреждать о неиспользуемых ignore-комментариях
-disallow_any_unimported = true  # Запретить типы Any для неимпортированных модулей
-disallow_subclassing_any = true # Запретить подклассы Any
-strict_equality = true        # Строгая проверка сравнений
-
-# Режимы строгой проверки
-strict = true                 # Активировать все strict-флаги
-disallow_untyped_defs = true  # Требовать аннотации типов для всех функций
-disallow_incomplete_defs = true  # Запретить частичные аннотации типов
-check_untyped_defs = true     # Проверять логику в нетипизированных функциях
-
-# Дополнительные проверки
-warn_unreachable = true       # Предупреждать о недостижимом коде
-warn_no_return = true         # Предупреждать о функциях без return
-warn_return_any = true        # Предупреждать о возврате Any
-no_implicit_optional = true   # Запретить неявные Optional
-strict_optional = true        # Строгая проверка Optional
-
-# Настройки импортов
-ignore_missing_imports = false  # Не игнорировать отсутствующие импорты
-follow_imports = "normal"      # Следовать импортам
-follow_imports_for_stubs = true  # Следовать импортам для stub-файлов
-
 # Настройки отчетов
 show_error_codes = true       # Показывать коды ошибок
 pretty = true                 # Красивый вывод
@@ -155,11 +146,10 @@ color_output = true           # Цветной вывод
 error_summary = true          # Сводка ошибок
 
 [tool.pytest.ini_options]
-minversion = "8.0"            # Минимальная версия pytest
-addopts = "-ra -q --strict-markers"  # Опции командной строки по умолчанию
-testpaths = [                 # Пути для поиска тестов
-    "tests",
-]
-python_files = ["test_*.py", "*_test.py"]  # Шаблоны имен файлов с тестами
-python_classes = ["Test*"]    # Шаблоны имен классов с тестами
-python_functions = ["test_*"] # Шаблоны имен функций с тестами
+minversion = "8.0"
+addopts = "-ra -q -v"
+testpaths = ["tests"]
+pythonpath = ["src"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

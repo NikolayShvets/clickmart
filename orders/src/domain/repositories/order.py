@@ -1,15 +1,13 @@
 from abc import abstractmethod
-from typing import Protocol, runtime_checkable
+from typing import Protocol
 
 from domain.entities.order import Order
-from domain.repositories.base import Repository
-from domain.value_objects.sku import SKU
+from domain.value_objects.order_number import OrderNumber
 
 
-@runtime_checkable
-class OrderRepository(Repository[Order], Protocol):
+class OrderRepository(Protocol):
     @abstractmethod
-    async def get_by_sku(self, sku: SKU) -> Order:
+    async def get_by_number(self, number: OrderNumber) -> Order | None:
         raise NotImplementedError
 
     @abstractmethod
