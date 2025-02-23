@@ -13,6 +13,8 @@ from presentation.api.v1.schemas import (
 
 
 class OrderController(Controller):
+    # TODO: тут из каллорий только use_case.execute, остальное - создание DTO и схем
+    # как сделать лучше?
     @post("/")
     @inject
     async def create(

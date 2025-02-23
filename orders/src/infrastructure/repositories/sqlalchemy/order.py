@@ -27,6 +27,7 @@ class SQLAlchemyOrderRepository(OrderRepository):
         return Order.from_dict(record.to_dict())
 
     async def create(self, order: Order) -> Order:
+        # TODO: тут какая-то глупость, впустую гоняем сущность из словаря и обратно
         record = Orders(
             number=order.number,
             customer_id=order.customer_id,
