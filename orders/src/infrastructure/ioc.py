@@ -1,6 +1,7 @@
+from collections.abc import AsyncIterator
+
 from dishka import Provider, Scope, provide
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
-from typing import AsyncIterator
 
 from application.use_cases import CreateOrderUseCase
 from domain.repositories import OrderRepository, StockRepository
@@ -25,7 +26,7 @@ class IoC(Provider):
     ) -> async_sessionmaker[AsyncSession]:
         """Provide SQLAlchemy session maker."""
         return create_session_maker(settings)
-    
+
     @provide(scope=Scope.REQUEST)
     async def get_session(
         self, session_maker: async_sessionmaker[AsyncSession]

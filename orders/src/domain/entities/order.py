@@ -32,6 +32,7 @@ class Order:
             Money.from_str("0"),
         )
 
+    # TODO: мне не очень нравится этот каскад from_dict, как сделать лучше?
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "Order":
         return cls(
