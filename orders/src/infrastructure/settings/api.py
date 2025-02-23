@@ -1,7 +1,9 @@
-from infrastructure.configs.base import Settings
+from functools import lru_cache
+
+from infrastructure.settings.base import Settings
 
 
-class ApiSettings(Settings):
+class APISettings(Settings):
     ROOT_PATH: str = "/orders"
     TITLE: str = "Orders API"
     VERSION: str = "1.0.0"
@@ -12,4 +14,6 @@ class ApiSettings(Settings):
     CORS_ALLOW_ORIGINS: list[str] = ["*"]
 
 
-settings = ApiSettings()
+@lru_cache(maxsize=1)
+def get_settings() -> APISettings:
+    return APISettings()

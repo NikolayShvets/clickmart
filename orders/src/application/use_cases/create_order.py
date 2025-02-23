@@ -9,6 +9,7 @@ from domain.value_objects.order_number import OrderNumber
 from domain.value_objects.sku import SKU
 
 
+# TODO: отказаться от UoW и передавать сессию и репозитории напрямую?
 class CreateOrderUseCase:
     def __init__(
         self,

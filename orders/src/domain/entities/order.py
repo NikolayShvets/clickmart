@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import StrEnum
+from typing import Any
 
 from domain.entities.order_item import OrderItem
 from domain.exceptions import EmptyOrderError
@@ -29,4 +30,13 @@ class Order:
         return sum(
             (item.total_price for item in self.items),
             Money.from_str("0"),
+        )
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "Order":
+        return cls(
+            number=OrderNumber(data["number"]),
+            customer_id=data["customer_id"],
+            status=OrderStatus(data["status"]),
+            items=[OrderItem.from_dict(item) for item in data["items"]],
         )

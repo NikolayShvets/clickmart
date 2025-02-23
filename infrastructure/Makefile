@@ -1,5 +1,5 @@
 .POSIX:
-.PHONY: up local down help env
+.PHONY: up local down env help
 .DEFAULT_GOAL := help
 
 # Цвета для help
@@ -30,7 +30,7 @@ env:  ## Создать .env файл из .env.example
 	fi
 
 ## Вспомогательные команды
-help:  ## Показать это сообщение
+help:  ## Помощь по командам
 	@echo "Доступные команды:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; \

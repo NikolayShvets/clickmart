@@ -3,7 +3,7 @@ from uuid import UUID as PYUUID
 from sqlalchemy import CheckConstraint, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
-from infrastructure.db.sqlalchemy.models.base import Base
+from infrastructure.sqlalchemy.models.base import Base
 
 
 class Stocks(Base):

@@ -1,5 +1,5 @@
 .POSIX:
-.PHONY: all_checks clean lint format typecheck test help env
+.PHONY: all_checks clean env lint format typecheck test migrations migrate downgrade help
 .DEFAULT_GOAL := help
 
 # Переменные
@@ -45,8 +45,17 @@ typecheck:  ## Проверить типы с помощью mypy
 test:  ## Запустить тесты с помощью pytest
 	$(UV) run pytest .
 
+migrations:  ## Создать новые миграции. Пример: make migrations m="initial_migration"
+	$(UV) run alembic revision --autogenerate -m $(m)
+
+migrate:  ## Применить миграции
+	$(UV) run alembic upgrade head
+
+downgrade:  ## Откатить миграции. Пример: make downgrade c=5f192388fca5; make downgrade c=-1
+	$(UV) run alembic downgrade $(c)
+
 ## Вспомогательные команды
-help:  ## Показать это сообщение
+help:  ## Помощь по командам
 	@echo "Доступные команды:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; \

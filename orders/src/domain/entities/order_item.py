@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Any
 
 from domain.entities.product import Product
 from domain.exceptions import EmptyOrderItemError
@@ -17,3 +18,10 @@ class OrderItem:
     @property
     def total_price(self) -> Money:
         return self.product.price * self.quantity
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "OrderItem":
+        return cls(
+            product=Product.from_dict(data["product"]),
+            quantity=data["quantity"],
+        )

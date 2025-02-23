@@ -4,12 +4,15 @@ from litestar import Litestar, Router
 from litestar.config.cors import CORSConfig
 from litestar.openapi.config import OpenAPIConfig
 
-from infrastructure.configs.api import settings as api_settings
-from infrastructure.configs.cors import settings as cors_settings
 from infrastructure.ioc import IoC
+from infrastructure.settings import APISettings, CORSSettings
 
 
-def create_app(route_handlers: list[Router]) -> Litestar:
+def create_app(
+    api_settings: APISettings,
+    cors_settings: CORSSettings,
+    route_handlers: list[Router],
+) -> Litestar:
     container = make_async_container(IoC())
 
     app = Litestar(
