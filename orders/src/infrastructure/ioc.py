@@ -5,13 +5,13 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from application.use_cases import CreateOrderUseCase
 from domain.interfaces import DBSession, OrderRepository, StockRepository
-from infrastructure.repositories import (
-    SQLAlchemyOrderRepository,
-    SQLAlchemyStockRepository,
-)
 from infrastructure.settings import PostgreSQLSettings
 from infrastructure.settings.postgresql import (
     get_settings as get_postgresql_settings,
+)
+from infrastructure.sqlalchemy.repositories import (
+    SQLAlchemyOrderRepository,
+    SQLAlchemyStockRepository,
 )
 from infrastructure.sqlalchemy.session import create_session_maker
 
