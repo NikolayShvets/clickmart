@@ -7,6 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from infrastructure.sqlalchemy.models.base import Base
 
 if TYPE_CHECKING:
+    from infrastructure.sqlalchemy.models.orders import Orders
     from infrastructure.sqlalchemy.models.products import Products
 
 
@@ -24,9 +25,14 @@ class OrderItems(Base):
         CheckConstraint("quantity > 0"),
         nullable=False,
     )
+
     product: Mapped["Products"] = relationship(
         "Products",
         back_populates="order_items",
+    )
+    order: Mapped["Orders"] = relationship(
+        "Orders",
+        back_populates="items",
     )
 
     def __str__(self) -> str:

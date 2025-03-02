@@ -17,14 +17,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    deploy:
-      resources:
-        limits:
-          memory: 1G
-          cpus: '1'
-        reservations:
-          memory: 512M
-          cpus: '0.5'
   pgadmin:
     image: dpage/pgadmin4
     container_name: clickmart-pgadmin
@@ -43,14 +35,6 @@ services:
       timeout: 10s
       start_period: 160s
       retries: 3
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-          cpus: '0.5'
-        reservations:
-          memory: 256M
-          cpus: '0.25'
 
 networks:
   clickmart-network:

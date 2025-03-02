@@ -11,5 +11,5 @@ class StockRepository(Protocol):
         raise NotImplementedError
 
     @abstractmethod
-    async def update(self, stock: Stock) -> Stock:
+    async def update(self, stock: Stock) -> None:
         raise NotImplementedError

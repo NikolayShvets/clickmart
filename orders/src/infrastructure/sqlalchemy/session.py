@@ -14,9 +14,6 @@ def create_session_maker(
         settings.dsn,
         pool_size=15,
         max_overflow=15,
-        connect_args={
-            "connect_timeout": 5,
-        },
     )
 
     return async_sessionmaker(

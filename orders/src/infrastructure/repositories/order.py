@@ -1,16 +1,18 @@
-from domain.entities import Order
-from domain.repositories import OrderRepository
-from domain.value_objects.order_number import OrderNumber
-from infrastructure.sqlalchemy.models import OrderItems, Orders
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
+
+from domain.entities import Order
+from domain.interfaces import OrderRepository
+from domain.value_objects.order_number import OrderNumber
+from infrastructure.sqlalchemy.models import OrderItems, Orders
 
 
 class SQLAlchemyOrderRepository(OrderRepository):
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
 
+    # TODO: на вход и выход дто-шку
     async def get_by_number(self, number: OrderNumber) -> Order | None:
         query = (
             select(Orders)
@@ -26,15 +28,10 @@ class SQLAlchemyOrderRepository(OrderRepository):
 
         return Order.from_dict(record.to_dict())
 
-    async def create(self, order: Order) -> Order:
-        # TODO: тут какая-то глупость, впустую гоняем сущность из словаря и обратно
+    async def create(self, order: Order) -> None:
         record = Orders(
-            number=order.number,
+            number=order.number.value,
             customer_id=order.customer_id,
             status=order.status,
         )
         self._session.add(record)
-        await self._session.commit()
-        await self._session.refresh(record)
-
-        return Order.from_dict(record.to_dict())

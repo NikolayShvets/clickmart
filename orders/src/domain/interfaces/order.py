@@ -11,5 +11,5 @@ class OrderRepository(Protocol):
         raise NotImplementedError
 
     @abstractmethod
-    async def create(self, order: Order) -> Order:
+    async def create(self, order: Order) -> None:
         raise NotImplementedError

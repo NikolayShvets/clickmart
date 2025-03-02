@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Any
 
 from domain.entities.order_item import OrderItem
 from domain.entities.product import Product
@@ -26,3 +27,11 @@ class Stock:
             raise OutOfStockError
 
         self.quantity -= order_item.quantity
+
+    # TODO: очень неудобно работать с этим
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "Stock":
+        return cls(
+            product=Product.from_dict(data["product"]),
+            quantity=data["quantity"],
+        )
