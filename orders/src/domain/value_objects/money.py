@@ -9,7 +9,7 @@ class Money:
     amount: Decimal
 
     def __post_init__(self) -> None:
-        if self.amount <= 0:
+        if self.amount <= Decimal("0.00"):
             raise MoneyIsNotPositiveError
 
     def __add__(self, other: "Money") -> "Money":

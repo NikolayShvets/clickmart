@@ -26,6 +26,11 @@ class SQLAlchemyOrderRepository(OrderRepository):
         if record is None:
             return None
 
+        # TODO: это так просто не работает, нужно
+        # приджойненные модели так же переводить в словари.
+        # Возможно, этого удастся избежать, если использовать
+        # DTO вместо самих сущностей.
+        # Либо нужно переделать метод to_dict
         return Order.from_dict(record.to_dict())
 
     async def create(self, order: Order) -> None:

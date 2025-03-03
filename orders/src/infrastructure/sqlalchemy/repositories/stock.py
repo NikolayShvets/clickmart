@@ -1,12 +1,10 @@
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import joinedload
 
 from domain.entities import Stock
 from domain.entities.product import Product
 from domain.interfaces import StockRepository
-from domain.value_objects.money import Money
-from domain.value_objects.sku import SKU
+from domain.value_objects import SKU, Money
 from infrastructure.sqlalchemy.models import Products, Stocks
 
 
@@ -16,25 +14,36 @@ class SQLAlchemyStockRepository(StockRepository):
 
     # TODO: на вход и выход дто-шку
     async def get_by_sku(self, sku: SKU) -> Stock | None:
-        query = (
+        # Сначала получаем Stock с блокировкой
+        stock_query = (
             select(Stocks)
             .join(Products)
-            .options(joinedload(Stocks.product))
             .where(Products.sku == sku.value)
+            .with_for_update()
         )
-        record = (await self._session.execute(query)).scalars().one_or_none()
+        stock_record = (
+            await self._session.execute(stock_query)
+        ).scalar_one_or_none()
 
-        if record is None:
+        if stock_record is None:
             return None
+
+        # Затем отдельно получаем Product
+        product_query = select(Products).where(
+            Products.id == stock_record.product_id
+        )
+        product_record = (
+            await self._session.execute(product_query)
+        ).scalar_one()
 
         return Stock(
             product=Product(
-                sku=SKU(record.product.sku),
-                name=record.product.name,
-                description=record.product.description,
-                price=Money(record.product.price),
+                sku=SKU(product_record.sku),
+                name=product_record.name,
+                description=product_record.description,
+                price=Money(product_record.price),
             ),
-            quantity=record.quantity,
+            quantity=stock_record.quantity,
         )
 
     async def update(self, stock: Stock) -> None:
